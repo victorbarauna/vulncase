@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+{% block conteudo %}
+<h2>Relatório - {{ projeto.nome }}</h2>
+<p>Tipo: {{ projeto.tipo }}</p>
+<p>{{ projeto.descricao }}</p>
+
+<h3>Resumo</h3>
+<p>Total de achados: {{ achados|length }} | Corrigidos: {{ corrigidos }}
+{% if achados %}({{ (corrigidos * 100 / achados|length)|round|int }}%){% endif %}</p>
+<p>
+    {% for s, n in por_sev.items() %}{{ s }}: {{ n }} &nbsp; {% endfor %}
+</p>
+<p>
+    {% for s, n in por_status.items() %}{{ s }}: {{ n }} &nbsp; {% endfor %}
+</p>
+
+<h3>Achados</h3>
+{% for a in achados %}
+<div class="item-relatorio">
+    <h4>#{{ a.id }} - {{ a.titulo }} <span class="sev-{{ a.severidade }}">[{{ a.severidade }}]</span></h4>
+    <p>Origem: {{ a.origem }} | Status: {{ a.status }} | Responsável: {{ a.responsavel or '-' }} | CWE/CVE: {{ a.cwe or '-' }}</p>
+    <p><b>Descrição:</b> {{ a.descricao or '-' }}</p>
+    <p><b>Evidência:</b></p>
+    <pre>{{ a.evidencia or '-' }}</pre>
+    <p><b>Correção proposta:</b> {{ a.correcao or '-' }}</p>
+</div>
+{% else %}
+<p>Nenhum achado nesse projeto.</p>
+{% endfor %}
+<p class="nao-imprimir">Dica: use Ctrl+P para salvar em PDF. <a href="{{ url_for('projetos') }}">Voltar</a></p>
+{% endblock %}

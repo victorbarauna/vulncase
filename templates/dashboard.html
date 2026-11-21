@@ -1,0 +1,48 @@
+{% extends "base.html" %}
+{% block conteudo %}
+<h2>Dashboard</h2>
+<p>{{ total_projetos }} projeto(s) e {{ total }} achado(s) cadastrados.</p>
+
+<div class="caixas">
+    <div class="caixa">
+        <h3>Por severidade</h3>
+        <table>
+            {% for s, n in por_sev.items() %}
+            <tr><td class="sev-{{ s }}"><a href="{{ url_for('achados', severidade=s) }}">{{ s }}</a></td><td>{{ n }}</td></tr>
+            {% endfor %}
+        </table>
+    </div>
+    <div class="caixa">
+        <h3>Por status</h3>
+        <table>
+            {% for s, n in por_status.items() %}
+            <tr><td><a href="{{ url_for('achados', status=s) }}">{{ s }}</a></td><td>{{ n }}</td></tr>
+            {% endfor %}
+        </table>
+    </div>
+    <div class="caixa">
+        <h3>Por origem</h3>
+        <table>
+            {% for s, n in por_origem.items() %}
+            <tr><td>{{ s }}</td><td>{{ n }}</td></tr>
+            {% endfor %}
+        </table>
+    </div>
+</div>
+
+<h3>Críticos e altos ainda pendentes</h3>
+<table>
+    <tr><th>#</th><th>Título</th><th>Projeto</th><th>Severidade</th><th>Responsável</th></tr>
+    {% for a in criticos %}
+    <tr>
+        <td>{{ a.id }}</td>
+        <td><a href="{{ url_for('ver_achado', id=a.id) }}">{{ a.titulo }}</a></td>
+        <td>{{ a.projeto_nome }}</td>
+        <td class="sev-{{ a.severidade }}">{{ a.severidade }}</td>
+        <td>{{ a.responsavel or '-' }}</td>
+    </tr>
+    {% else %}
+    <tr><td colspan="5">Nada crítico pendente.</td></tr>
+    {% endfor %}
+</table>
+{% endblock %}
