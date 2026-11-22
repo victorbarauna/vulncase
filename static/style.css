@@ -1,0 +1,26 @@
+@charset "UTF-8";
+body { font-family: Arial, sans-serif; margin: 0; background: #f4f4f4; color: #222; }
+header { background: #2c3e50; color: white; padding: 10px 20px; display: flex; justify-content: space-between; align-items: center; }
+header a, header span { color: white; margin-left: 15px; text-decoration: none; }
+header button { margin-left: 15px; }
+main { max-width: 1000px; margin: 20px auto; background: white; padding: 20px; }
+table { border-collapse: collapse; width: 100%; margin-bottom: 15px; }
+th, td { border: 1px solid #ccc; padding: 6px 8px; text-align: left; }
+th { background: #eee; }
+form label { display: block; margin-bottom: 10px; }
+form input[type=text], form input[type=email], form input[type=password], form select, form textarea { display: block; width: 100%; max-width: 500px; padding: 5px; box-sizing: border-box; }
+form label.check input { display: inline; width: auto; }
+textarea { height: 80px; }
+.inline { display: inline; }
+.filtros select { display: inline; width: auto; }
+.botao { background: #2c3e50; color: white; padding: 5px 10px; text-decoration: none; }
+.aviso { background: #fff3cd; padding: 8px; border: 1px solid #e0c36b; }
+.caixas { display: flex; gap: 15px; }
+.caixa { flex: 1; }
+pre { background: #f8f8f8; padding: 8px; white-space: pre-wrap; }
+.sev-Crítica { color: #fff; background: #8b0000; font-weight: bold; }
+.sev-Alta { color: #c0392b; font-weight: bold; }
+.sev-Média { color: #d68910; }
+.sev-Baixa { color: #2e86c1; }
+.item-relatorio { border-bottom: 1px solid #ccc; margin-bottom: 10px; }
+@media print { header, .nao-imprimir { display: none; } main { margin: 0; } }

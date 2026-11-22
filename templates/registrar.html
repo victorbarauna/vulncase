@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+{% block conteudo %}
+<h2>Criar conta</h2>
+<form method="post">
+    <input type="hidden" name="csrf" value="{{ csrf_token() }}">
+    <label>Nome <input type="text" name="nome" required></label>
+    <label>E-mail <input type="email" name="email" required></label>
+    <label>Senha (mín. 8 caracteres) <input type="password" name="senha" minlength="8" required></label>
+    <button type="submit">Registrar</button>
+</form>
+<p><a href="{{ url_for('login') }}">Voltar ao login</a></p>
+{% endblock %}

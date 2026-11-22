@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <title>VulnCase</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <header>
+        <strong>VulnCase</strong>
+        {% if session.usuario_id %}
+        <nav>
+            <a href="{{ url_for('dashboard') }}">Dashboard</a>
+            <a href="{{ url_for('projetos') }}">Projetos</a>
+            <a href="{{ url_for('achados') }}">Achados</a>
+            <span>Olá, {{ session.usuario_nome }}</span>
+            <form method="post" action="{{ url_for('logout') }}" class="inline">
+                <input type="hidden" name="csrf" value="{{ csrf_token() }}">
+                <button type="submit">Sair</button>
+            </form>
+        </nav>
+        {% endif %}
+    </header>
+    <main>
+        {% for msg in get_flashed_messages() %}
+        <p class="aviso">{{ msg }}</p>
+        {% endfor %}
+        {% block conteudo %}{% endblock %}
+    </main>
+</body>
+</html>
