@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+{% block conteudo %}
+<h2>Achados</h2>
+<p><a class="botao" href="{{ url_for('novo_achado') }}">+ Novo achado</a></p>
+
+<form method="get" class="filtros">
+    <select name="projeto">
+        <option value="">Todos os projetos</option>
+        {% for p in projetos %}
+        <option value="{{ p.id }}" {% if filtro.projeto == p.id|string %}selected{% endif %}>{{ p.nome }}</option>
+        {% endfor %}
+    </select>
+    <select name="severidade">
+        <option value="">Todas as severidades</option>
+        {% for s in severidades %}
+        <option {% if filtro.severidade == s %}selected{% endif %}>{{ s }}</option>
+        {% endfor %}
+    </select>
+    <select name="status">
+        <option value="">Todos os status</option>
+        {% for s in status_lista %}
+        <option {% if filtro.status == s %}selected{% endif %}>{{ s }}</option>
+        {% endfor %}
+    </select>
+    <button type="submit">Filtrar</button>
+</form>
+
+<table>
+    <tr><th>#</th><th>Título</th><th>Projeto</th><th>Origem</th><th>Severidade</th><th>Status</th><th>Responsável</th></tr>
+    {% for a in achados %}
+    <tr>
+        <td>{{ a.id }}</td>
+        <td><a href="{{ url_for('ver_achado', id=a.id) }}">{{ a.titulo }}</a></td>
+        <td>{{ a.projeto_nome }}</td>
+        <td>{{ a.origem }}</td>
+        <td class="sev-{{ a.severidade }}">{{ a.severidade }}</td>
+        <td>{{ a.status }}</td>
+        <td>{{ a.responsavel or '-' }}</td>
+    </tr>
+    {% else %}
+    <tr><td colspan="7">Nenhum achado encontrado.</td></tr>
+    {% endfor %}
+</table>
+{% endblock %}

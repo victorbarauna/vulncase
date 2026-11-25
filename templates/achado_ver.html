@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+{% block conteudo %}
+<h2>#{{ achado.id }} - {{ achado.titulo }}</h2>
+<table class="detalhe">
+    <tr><th>Projeto</th><td>{{ achado.projeto_nome }}</td></tr>
+    <tr><th>Origem</th><td>{{ achado.origem }}</td></tr>
+    <tr><th>Severidade</th><td class="sev-{{ achado.severidade }}">{{ achado.severidade }}</td></tr>
+    <tr><th>Status</th><td>{{ achado.status }}</td></tr>
+    <tr><th>Responsável</th><td>{{ achado.responsavel or '-' }}</td></tr>
+    <tr><th>CWE / CVE</th><td>{{ achado.cwe or '-' }}</td></tr>
+    <tr><th>Criado em</th><td>{{ achado.criado_em }}</td></tr>
+    <tr><th>Atualizado em</th><td>{{ achado.atualizado_em }}</td></tr>
+</table>
+<h3>Descrição</h3>
+<pre>{{ achado.descricao or '-' }}</pre>
+<h3>Evidência</h3>
+<pre>{{ achado.evidencia or '-' }}</pre>
+<h3>Correção proposta</h3>
+<pre>{{ achado.correcao or '-' }}</pre>
+
+<p>
+    <a class="botao" href="{{ url_for('editar_achado', id=achado.id) }}">Editar</a>
+    <form method="post" action="{{ url_for('excluir_achado', id=achado.id) }}" class="inline">
+        <input type="hidden" name="csrf" value="{{ csrf_token() }}">
+        <button type="submit">Excluir</button>
+    </form>
+    <a href="{{ url_for('achados') }}">Voltar</a>
+</p>
+{% endblock %}

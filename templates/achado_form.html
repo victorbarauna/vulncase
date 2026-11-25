@@ -1,0 +1,50 @@
+{% extends "base.html" %}
+{% block conteudo %}
+<h2>{{ 'Editar' if achado and achado.id else 'Novo' }} achado</h2>
+{% if not projetos %}
+<p>Cadastre um <a href="{{ url_for('novo_projeto') }}">projeto</a> antes.</p>
+{% else %}
+<form method="post">
+    <input type="hidden" name="csrf" value="{{ csrf_token() }}">
+    <label>Projeto
+        <select name="projeto_id">
+            {% for p in projetos %}
+            <option value="{{ p.id }}" {% if achado and achado.projeto_id|string == p.id|string %}selected{% endif %}>{{ p.nome }}</option>
+            {% endfor %}
+        </select>
+    </label>
+    <label>Título <input type="text" name="titulo" value="{{ achado.titulo if achado else '' }}" required></label>
+    <label>Origem
+        <select name="origem">
+            {% for o in origens %}
+            <option {% if achado and achado.origem == o %}selected{% endif %}>{{ o }}</option>
+            {% endfor %}
+        </select>
+    </label>
+    <label>Severidade
+        <select name="severidade">
+            {% for s in severidades %}
+            <option {% if achado and achado.severidade == s %}selected{% endif %}>{{ s }}</option>
+            {% endfor %}
+        </select>
+    </label>
+    <label>Status
+        <select name="status">
+            {% for s in status_lista %}
+            <option {% if achado and achado.status == s %}selected{% endif %}>{{ s }}</option>
+            {% endfor %}
+        </select>
+    </label>
+    <label>Responsável <input type="text" name="responsavel" value="{{ achado.responsavel if achado else '' }}"></label>
+    <label>CWE / CVE (opcional) <input type="text" name="cwe" placeholder="ex: CWE-89" value="{{ achado.cwe if achado else '' }}"></label>
+    <label>Descrição <textarea name="descricao">{{ achado.descricao if achado else '' }}</textarea></label>
+    <label>Evidência (saída do nmap, print, payload...) <textarea name="evidencia">{{ achado.evidencia if achado else '' }}</textarea></label>
+    <label>Correção proposta <textarea name="correcao">{{ achado.correcao if achado else '' }}</textarea></label>
+    {% if not (achado and achado.id) %}
+    <label class="check"><input type="checkbox" name="forcar" value="1"> Cadastrar mesmo assim se o título já existir</label>
+    {% endif %}
+    <button type="submit">Salvar</button>
+    <a href="{{ url_for('achados') }}">Cancelar</a>
+</form>
+{% endif %}
+{% endblock %}
